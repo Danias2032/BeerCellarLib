@@ -71,4 +71,5 @@ fun BeerAdd(
 @Composable
 fun AddBeer() {
     BeerAdd()
+
 }
