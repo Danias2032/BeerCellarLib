@@ -203,13 +203,16 @@ fun BeerAdd(
                     )
                     addBeer(beer)
                     navigateBack()
+                }) {
+                    Text("Add")
                 }
             }
         }
     }
+}
 
-    @Preview
-    @Composable
-    fun AddBeer() {
-        BeerAdd()
-    }
+@Preview
+@Composable
+fun AddBeerPreview() {
+    BeerAdd()
+}
