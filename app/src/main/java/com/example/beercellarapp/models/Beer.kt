@@ -1,26 +1,24 @@
 package com.example.beercellarapp.models
 
 data class Beer(val id: Int,
-                val user: String,
                 val brewery: String,
                 val name: String,
                 val style: String,
                 val abv: Double,
-                val volume: Int,
+                val volume: Double,
                 val pictureUrl: String? = null,
                 val howMany: Int)
 {
-    constructor(user: String,
-                brewery: String,
+    constructor(brewery: String,
                 name: String,
                 style: String,
                 abv: Double,
-                volume: Int,
+                volume: Double,
                 pictureUrl: String,
                 howMany: Int) :
-            this(-1, user, brewery, name, style, abv, volume, pictureUrl, howMany)
+            this(0, brewery, name, style, abv, volume, pictureUrl, howMany)
 
     override fun toString(): String {
-        return "$id, $user, $brewery, $name, $style, $abv, $volume, $pictureUrl, $howMany"
+        return "$id, $brewery, $name, $style, $abv, $volume, $pictureUrl, $howMany"
     }
 }

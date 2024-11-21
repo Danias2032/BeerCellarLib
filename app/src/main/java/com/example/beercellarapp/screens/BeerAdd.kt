@@ -1,11 +1,15 @@
 package com.example.beercellarapp.screens
 
 import android.content.res.Configuration
+import android.icu.text.CaseMap.Title
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -13,6 +17,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -56,20 +62,154 @@ fun BeerAdd(
             val isPortrait = orientation == Configuration.ORIENTATION_PORTRAIT
             if (isPortrait) {
                 OutlinedTextField(
+                    onValueChange = { brewery = it },
+                    value = brewery,
+                    isError = breweryIsError,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text("Brewery") }
+                )
+                OutlinedTextField(
                     onValueChange = { name = it },
                     value = name,
                     isError = nameIsError,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text("Name") }
+                )
+                OutlinedTextField(
+                    onValueChange = { style = it },
+                    value = style,
+                    isError = styleIsError,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text("Style") }
+                )
+                OutlinedTextField(
+                    onValueChange = { abv = it },
+                    value = abv,
+                    isError = abvIsError,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth(),
-                    label = { Text(text = "Name") }
+                    label = { Text("Alcohol by Volume") }
                 )
+                OutlinedTextField(
+                    onValueChange = { volume = it },
+                    value = volume,
+                    isError = volumeIsError,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text("Volume") }
+                )
+                OutlinedTextField(
+                    onValueChange = { pictureUrl = it },
+                    value = pictureUrl,
+                    isError = pictureUrlIsError,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text("Picture") }
+                )
+                OutlinedTextField(
+                    onValueChange = { howMany = it },
+                    value = howMany,
+                    isError = howManyIsError,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text("Amount") }
+                )
+            } else {
+                Row(
+                    modifier = modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    OutlinedTextField(
+                        onValueChange = { brewery = it },
+                        value = brewery,
+                        isError = breweryIsError,
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                        modifier = Modifier.weight(1f),
+                        label = { Text("Brewery") }
+                    )
+                    OutlinedTextField(
+                        onValueChange = { name = it },
+                        value = name,
+                        isError = nameIsError,
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                        modifier = Modifier.weight(1f),
+                        label = { Text("Name") }
+                    )
+                    OutlinedTextField(
+                        onValueChange = { style = it },
+                        value = style,
+                        isError = styleIsError,
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                        modifier = Modifier.weight(1f),
+                        label = { Text("Style") }
+                    )
+                    OutlinedTextField(
+                        onValueChange = { abv = it },
+                        value = abv,
+                        isError = abvIsError,
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        modifier = Modifier.weight(1f),
+                        label = { Text("Alcohol by Volume") }
+                    )
+                    OutlinedTextField(
+                        onValueChange = { volume = it },
+                        value = volume,
+                        isError = volumeIsError,
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        modifier = Modifier.weight(1f),
+                        label = { Text("Volume") }
+                    )
+                    OutlinedTextField(
+                        onValueChange = { pictureUrl = it },
+                        value = pictureUrl,
+                        isError = pictureUrlIsError,
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                        modifier = Modifier.weight(1f),
+                        label = { Text("Picture") }
+                    )
+                    OutlinedTextField(
+                        onValueChange = { howMany = it },
+                        value = howMany,
+                        isError = howManyIsError,
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                        modifier = Modifier.weight(1f),
+                        label = { Text("Amount") })
+                }
+            }
+            Row(
+                modifier = modifier.fillMaxSize(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            )
+            {
+                Button(onClick = { navigateBack() }) {
+                    Text("Back")
+                }
+                Button(onClick = {
+                    if (name.isEmpty()) {
+                        nameIsError = true
+                        return@Button
+                    }
+                    val beer = Beer(
+                        brewery = brewery,
+                        name = name,
+                        style = style,
+                        abv = abv,
+                        volume = volume,
+                        pictureUrl = pictureUrl,
+                        howMany = howMany,
+                    )
+                    addBeer(beer)
+                    navigateBack()
+                }
             }
         }
     }
-}
-@Preview
-@Composable
-fun AddBeer() {
-    BeerAdd()
 
-}
+    @Preview
+    @Composable
+    fun AddBeer() {
+        BeerAdd()
+    }
