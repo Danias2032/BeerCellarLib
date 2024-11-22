@@ -18,8 +18,7 @@ class BeersViewModel : ViewModel() {
         repository.getBeers()
     }
 
-    /*    fun add(beer: Beer) {
-            repository.add(beer)
-        }
-        */
+    fun add(beer: Beer) {
+        repository.add(beer)
+    }
 }

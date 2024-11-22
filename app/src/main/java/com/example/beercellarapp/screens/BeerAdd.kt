@@ -38,10 +38,10 @@ fun BeerAdd(
     var brewery by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }
     var style by remember { mutableStateOf("") }
-    var abv by remember { mutableStateOf("") }
-    var volume by remember { mutableStateOf("") }
+    var abvStr by remember { mutableStateOf("") }
+    var volumeStr by remember { mutableStateOf("") }
     var pictureUrl by remember { mutableStateOf("") }
-    var howMany by remember { mutableStateOf("") }
+    var howManyStr by remember { mutableStateOf("") }
 
     // -||- IsError
     var breweryIsError by remember { mutableStateOf(false) }
@@ -86,16 +86,16 @@ fun BeerAdd(
                     label = { Text("Style") }
                 )
                 OutlinedTextField(
-                    onValueChange = { abv = it },
-                    value = abv,
+                    onValueChange = { abvStr = it },
+                    value = abvStr,
                     isError = abvIsError,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text("Alcohol by Volume") }
                 )
                 OutlinedTextField(
-                    onValueChange = { volume = it },
-                    value = volume,
+                    onValueChange = { volumeStr = it },
+                    value = volumeStr,
                     isError = volumeIsError,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth(),
@@ -110,8 +110,8 @@ fun BeerAdd(
                     label = { Text("Picture") }
                 )
                 OutlinedTextField(
-                    onValueChange = { howMany = it },
-                    value = howMany,
+                    onValueChange = { howManyStr = it },
+                    value = howManyStr,
                     isError = howManyIsError,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                     modifier = Modifier.fillMaxWidth(),
@@ -147,16 +147,16 @@ fun BeerAdd(
                         label = { Text("Style") }
                     )
                     OutlinedTextField(
-                        onValueChange = { abv = it },
-                        value = abv,
+                        onValueChange = { abvStr = it },
+                        value = abvStr,
                         isError = abvIsError,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         modifier = Modifier.weight(1f),
                         label = { Text("Alcohol by Volume") }
                     )
                     OutlinedTextField(
-                        onValueChange = { volume = it },
-                        value = volume,
+                        onValueChange = { volumeStr = it },
+                        value = volumeStr,
                         isError = volumeIsError,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         modifier = Modifier.weight(1f),
@@ -171,8 +171,8 @@ fun BeerAdd(
                         label = { Text("Picture") }
                     )
                     OutlinedTextField(
-                        onValueChange = { howMany = it },
-                        value = howMany,
+                        onValueChange = { howManyStr = it },
+                        value = howManyStr,
                         isError = howManyIsError,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                         modifier = Modifier.weight(1f),
@@ -192,6 +192,25 @@ fun BeerAdd(
                         nameIsError = true
                         return@Button
                     }
+                    
+                    val abv = abvStr.toDoubleOrNull()
+                    if (abv == null) {
+                        abvIsError = true
+                        return@Button
+                    }
+
+                    val volume = volumeStr.toDoubleOrNull()
+                    if (volume == null) {
+                        volumeIsError = true
+                        return@Button
+                    }
+
+                    val howMany = howManyStr.toIntOrNull()
+                    if (howMany == null) {
+                        howManyIsError = true
+                        return@Button
+                    }
+                    
                     val beer = Beer(
                         brewery = brewery,
                         name = name,
