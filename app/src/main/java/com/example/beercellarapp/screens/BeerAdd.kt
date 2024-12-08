@@ -1,7 +1,6 @@
 package com.example.beercellarapp.screens
 
 import android.content.res.Configuration
-import android.icu.text.CaseMap.Title
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
@@ -18,13 +16,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableDoubleStateOf
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -51,7 +46,6 @@ fun BeerAdd(
     var howManyStr by remember { mutableStateOf("") }
 
     // -||- IsError
-    var idIsError by remember { mutableStateOf(false) }
     var breweryIsError by remember { mutableStateOf(false) }
     var nameIsError by remember { mutableStateOf(false) }
     var styleIsError by remember { mutableStateOf(false) }
@@ -198,6 +192,16 @@ fun BeerAdd(
                 Button(onClick = {
                     if (name.isEmpty()) {
                         nameIsError = true
+                        return@Button
+                    }
+
+                    if (brewery.isEmpty()) {
+                        breweryIsError = true
+                        return@Button
+                    }
+
+                    if (style.isEmpty()) {
+                        styleIsError = true
                         return@Button
                     }
 
