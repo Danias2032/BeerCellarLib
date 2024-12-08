@@ -131,14 +131,6 @@ fun BeerAdd(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     OutlinedTextField(
-                        onValueChange = { idStr = it},
-                        value = idStr,
-                        isError = idIsError,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        modifier = Modifier.weight(1f),
-                        label = { Text("Id") }
-                    )
-                    OutlinedTextField(
                         onValueChange = { brewery = it },
                         value = brewery,
                         isError = breweryIsError,
