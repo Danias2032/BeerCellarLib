@@ -14,9 +14,9 @@ class BeersRepository {
     private val baseUrl = "https://anbo-restbeer.azurewebsites.net/api/"
     private val beerService: BeerService
 
-    val beersFlow: MutableState<List<Beer>> = mutableStateOf(listOf())
+    val beers: MutableState<List<Beer>> = mutableStateOf(listOf())
     val isLoadingBeers = mutableStateOf(false)
-    val errorMessageFlow = mutableStateOf("")
+    val errorMessage = mutableStateOf("")
 
     init {
         val build: Retrofit = Retrofit.Builder()
@@ -34,22 +34,130 @@ class BeersRepository {
                 isLoadingBeers.value = false
                 if (response.isSuccessful) {
                     val beerList: List<Beer>? = response.body()
-                    beersFlow.value = beerList ?: emptyList()
-                    errorMessageFlow.value = ""
+                    beers.value = beerList ?: emptyList()
+                    errorMessage.value = ""
                 } else {
                     val message = response.code().toString() + " " + response.message()
-                    errorMessageFlow.value = message
+                    errorMessage.value = message
                     Log.d("APPLE", message)
                 }
             }
+
             override fun onFailure(call: Call<List<Beer>>, t: Throwable) {
                 isLoadingBeers.value = false
                 val message = t.message ?: "No connection to back-end"
-                errorMessageFlow.value = message
+                errorMessage.value = message
                 Log.d("APPLE", message)
             }
         })
     }
 
+    fun add(beer: Beer) {
+        BeerService.saveBeer(beer).enqueue(object : Callback<Beer> {
+            override fun onResponse(call: Call<Beer>, response: Response<Beer>) {
+                if (response.isSuccessful) {
+                    Log.d("APPLE", "Added " + response.body())
+                    errorMessage.value = ""
+                    getBeers()
+                } else {
+                    val message = response.code().toString() + " " + response.message()
+                    errorMessage.value = message
+                    Log.d("APPLE", message)
+                }
+            }
 
+            override fun onFailure(call: Call<Beer>, t: Throwable) {
+                val message = t.message ?: "No connection to back-end"
+                errorMessage.value = message
+                Log.d("APPLE", message)
+            }
+        })
+    }
+
+    fun delete(id: Int) {
+        Log.d("APPLE", "Delete: $id")
+        BeerService.deleteBeer(id).enqueue(object : Callback<Beer> {
+            override fun onResponse(call: Call<Beer>, response: Response<Beer>) {
+                if (response.isSuccessful) {
+                    Log.d("APPLE", "Deleted: " + response.body())
+                    errorMessage.value = ""
+                    getBeers()
+                } else {
+                    val message = response.code().toString() + " " + response.message()
+                    errorMessage.value = message
+                    Log.d("APPLE", "Not deleted: $message")
+                }
+            }
+
+            override fun onFailure(call: Call<Beer>, t: Throwable) {
+                val message = t.message ?: "No connection to back-end"
+                errorMessage.value = message
+                Log.d("APPLE", "Not Deleted: $message")
+            }
+        })
+    }
+
+
+    fun update(beerId: Int, beer: Beer) {
+        BeerService.updateBeer(beerId, beer).enqueue(object : Callback<Beer> {
+            override fun onResponse(call: Call<Beer>, response: Response<Beer>) {
+                if (response.isSuccessful) {
+                    Log.d("APPLE", "Updated: " + response.body())
+                    errorMessage.value = ""
+                    getBeers()
+                } else {
+                    val message = response.code().toString() + " " + response.message()
+                    errorMessage.value = message
+                    Log.d("APPLE", "Update: $message")
+                }
+            }
+
+            override fun onFailure(call: Call<Beer>, t: Throwable) {
+                val message = t.message ?: "No connection to back-end"
+                errorMessage.value = message
+                Log.d("APPLE", "Update: $message")
+            }
+        })
+    }
+
+    fun sortBeersByName(ascending: Boolean) {
+        Log.d("APPLE", "Sort by Title")
+        if (ascending)
+            beers.value = beers.value.sortedBy { it.name }
+    }
+
+    fun sortBeersByHowMany(ascending: Boolean) {
+        Log.d("APPLE", "Sort by Quantity")
+        if (ascending)
+            beers.value = beers.value.sortedBy { it.howMany }
+        else
+            beers.value = beers.value.sortedByDescending { it.howMany }
+    }
+
+    fun filterByName(titleFragment: String) {
+        if (titleFragment.isEmpty()) {
+            getBeers()
+            return
+        }
+        beers.value =
+            beers.value.filter {
+                it.name.contains(titleFragment, ignoreCase = true)
+            }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

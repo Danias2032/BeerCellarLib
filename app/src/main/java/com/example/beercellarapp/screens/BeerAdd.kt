@@ -40,7 +40,7 @@ fun BeerAdd(
     var style by remember { mutableStateOf("") }
     var abvStr by remember { mutableStateOf("") }
     var volumeStr by remember { mutableStateOf("") }
-    var pictureUrl by remember { mutableStateOf("") }
+    // var pictureUrl by remember { mutableStateOf("") }
     var howManyStr by remember { mutableStateOf("") }
 
     // -||- IsError
@@ -49,7 +49,7 @@ fun BeerAdd(
     var styleIsError by remember { mutableStateOf(false) }
     var abvIsError by remember { mutableStateOf(false) }
     var volumeIsError by remember { mutableStateOf(false) }
-    var pictureUrlIsError by remember { mutableStateOf(false) }
+    // var pictureUrlIsError by remember { mutableStateOf(false) }
     var howManyIsError by remember { mutableStateOf(false) }
 
     Scaffold(modifier = modifier.fillMaxSize(),
@@ -101,14 +101,14 @@ fun BeerAdd(
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text("Volume") }
                 )
-                OutlinedTextField(
+                /*OutlinedTextField(
                     onValueChange = { pictureUrl = it },
                     value = pictureUrl,
                     isError = pictureUrlIsError,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text("Picture") }
-                )
+                )*/
                 OutlinedTextField(
                     onValueChange = { howManyStr = it },
                     value = howManyStr,
@@ -162,14 +162,14 @@ fun BeerAdd(
                         modifier = Modifier.weight(1f),
                         label = { Text("Volume") }
                     )
-                    OutlinedTextField(
+                    /*OutlinedTextField(
                         onValueChange = { pictureUrl = it },
                         value = pictureUrl,
                         isError = pictureUrlIsError,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                         modifier = Modifier.weight(1f),
                         label = { Text("Picture") }
-                    )
+                    )*/
                     OutlinedTextField(
                         onValueChange = { howManyStr = it },
                         value = howManyStr,
@@ -217,7 +217,7 @@ fun BeerAdd(
                         style = style,
                         abv = abv,
                         volume = volume,
-                        pictureUrl = pictureUrl,
+                        //pictureUrl = pictureUrl,
                         howMany = howMany,
                     )
                     addBeer(beer)

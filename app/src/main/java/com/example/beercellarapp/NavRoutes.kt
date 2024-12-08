@@ -1,4 +1,7 @@
 package com.example.beercellarapp
 
-sealed class NavRoutes(val route: String)
-    data object BeerList : NavRoutes("beer list")
+sealed class NavRoutes(val route: String) {
+    data object BeerList : NavRoutes("list")
+    data object BeerDetails : NavRoutes("details")
+    data object BeerAdd : NavRoutes("add")
+}
