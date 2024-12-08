@@ -10,7 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.NavHost
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.beercellarapp.models.Beer
@@ -42,9 +42,9 @@ fun MainScreen(modifier: Modifier = Modifier) {
     NavHost(navController = navController, startDestination = NavRoutes.BeerList.route) {
         composable(NavRoutes.BeerList.route) {
             BeerList(
-                modifier = modifier,
                 beers = beers,
                 errorMessage = errorMessage,
+                modifier = modifier,
                 onBeerSelected =
                 { beer ->
                     navController.navigate(NavRoutes.BeerDetails.route + "/${beer.id}")
@@ -62,8 +62,9 @@ fun MainScreen(modifier: Modifier = Modifier) {
         ) { backStackEntry ->
             val beerId = backStackEntry.arguments?.getInt("beerId")
             val beer = beers.find { it.id == beerId } ?: Beer(1, "", name = "No Beer", "", 0.0, 0.0, howMany = 0)
-            BeerDetails(modifier = modifier,
+            BeerDetails(
                 beer = beer,
+                modifier = modifier,
                 onUpdate = { id: Int, beer: Beer -> viewModel.update(id, beer) },
                 onNavigateBack = { navController.popBackStack() }
             )
