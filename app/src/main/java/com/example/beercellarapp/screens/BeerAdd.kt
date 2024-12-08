@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
@@ -23,6 +24,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,6 +37,11 @@ fun BeerAdd(
     addBeer: (Beer) -> Unit = {},
     navigateBack: () -> Unit = {}
 ) {
+    var count = 0
+    fun getNextId(): Int {
+        return count++
+    }
+
     var brewery by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }
     var style by remember { mutableStateOf("") }
@@ -44,6 +51,7 @@ fun BeerAdd(
     var howManyStr by remember { mutableStateOf("") }
 
     // -||- IsError
+    var idIsError by remember { mutableStateOf(false) }
     var breweryIsError by remember { mutableStateOf(false) }
     var nameIsError by remember { mutableStateOf(false) }
     var styleIsError by remember { mutableStateOf(false) }
@@ -123,6 +131,14 @@ fun BeerAdd(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     OutlinedTextField(
+                        onValueChange = { idStr = it},
+                        value = idStr,
+                        isError = idIsError,
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        modifier = Modifier.weight(1f),
+                        label = { Text("Id") }
+                    )
+                    OutlinedTextField(
                         onValueChange = { brewery = it },
                         value = brewery,
                         isError = breweryIsError,
@@ -192,7 +208,7 @@ fun BeerAdd(
                         nameIsError = true
                         return@Button
                     }
-                    
+
                     val abv = abvStr.toDoubleOrNull()
                     if (abv == null) {
                         abvIsError = true
@@ -210,8 +226,9 @@ fun BeerAdd(
                         howManyIsError = true
                         return@Button
                     }
-                    
+
                     val beer = Beer(
+                        id = getNextId(),
                         brewery = brewery,
                         name = name,
                         style = style,

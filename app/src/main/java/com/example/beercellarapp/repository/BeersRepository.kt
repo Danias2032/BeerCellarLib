@@ -53,7 +53,7 @@ class BeersRepository {
     }
 
     fun add(beer: Beer) {
-        BeerService.saveBeer(beer).enqueue(object : Callback<Beer> {
+        beerService.saveBeer(beer).enqueue(object : Callback<Beer> {
             override fun onResponse(call: Call<Beer>, response: Response<Beer>) {
                 if (response.isSuccessful) {
                     Log.d("APPLE", "Added " + response.body())
@@ -76,7 +76,7 @@ class BeersRepository {
 
     fun delete(id: Int) {
         Log.d("APPLE", "Delete: $id")
-        BeerService.deleteBeer(id).enqueue(object : Callback<Beer> {
+        beerService.deleteBeer(id).enqueue(object : Callback<Beer> {
             override fun onResponse(call: Call<Beer>, response: Response<Beer>) {
                 if (response.isSuccessful) {
                     Log.d("APPLE", "Deleted: " + response.body())
@@ -99,7 +99,7 @@ class BeersRepository {
 
 
     fun update(beerId: Int, beer: Beer) {
-        BeerService.updateBeer(beerId, beer).enqueue(object : Callback<Beer> {
+        beerService.updateBeer(beerId, beer).enqueue(object : Callback<Beer> {
             override fun onResponse(call: Call<Beer>, response: Response<Beer>) {
                 if (response.isSuccessful) {
                     Log.d("APPLE", "Updated: " + response.body())

@@ -24,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.beercellarapp.models.Beer
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,7 +35,7 @@ fun BeerDetails(
     onUpdate: (Int, Beer) -> Unit = { id: Int, data: Beer -> },
     onNavigateBack: () -> Unit = {}
 ) {
-    var id by remember { mutableStateOf(beer.id) }
+    var id by remember { mutableStateOf(beer.id.toString()) }
     var brewery by remember { mutableStateOf(beer.brewery) }
     var name by remember { mutableStateOf(beer.name) }
     var style by remember { mutableStateOf(beer.style) }
@@ -52,6 +53,13 @@ fun BeerDetails(
             val orientation = LocalConfiguration.current.orientation
             val isPortrait = orientation == Configuration.ORIENTATION_PORTRAIT
             if (isPortrait) {
+                OutlinedTextField(
+                    onValueChange = { id = it },
+                    value = id,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text(text = "Id") }
+                )
                 OutlinedTextField(
                     onValueChange = { brewery = it },
                     value = brewery,
@@ -108,7 +116,31 @@ fun BeerDetails(
                         Text("Back")
                     }
                 }
+                Button(onClick = {
+                    val data = Beer(
+                        id = id.toInt(),
+                        "",
+                        "",
+                        "",
+                        abvStr.toDouble(),
+                        volumeStr.toDouble(),
+                        howManyStr.toInt()
+                    )
+                    onUpdate(beer.id, data)
+                    onNavigateBack()
+                }) {
+                    Text("Update")
+                }
             }
+
         }
     }
+}
+
+@Preview
+@Composable
+fun BeerDetailsPreview() {
+    BeerDetails(
+        beer = Beer(0, "", "", "", 0.0, 0.0, 0)
+    )
 }

@@ -9,14 +9,15 @@ data class Beer(val id: Int,
                 //val pictureUrl: String? = null,
                 val howMany: Int)
 {
-    constructor(brewery: String,
+    /*constructor(id: Int, // Kun nødvendig, hvis man vil ændre ift. standard konstruktør.
+                brewery: String,
                 name: String,
                 style: String,
                 abv: Double,
                 volume: Double,
                 //pictureUrl: String,
                 howMany: Int) :
-            this(0, brewery, name, style, abv, volume, howMany)
+            this(id, brewery, name, style, abv, volume, howMany)*/
 
     override fun toString(): String {
         return "$id, $brewery, $name, $style, $abv, $volume, $howMany"

@@ -189,7 +189,7 @@ private fun BeerItem(
 @Preview
 @Composable
 fun BeerListPreview() {
-    Beerlist(
+    BeerList(
         beers = listOf(
             Beer(0, "", "Guld dame", "", 0.0, 0.0, 10),
             Beer(1, "", "Dansk Pilsner", "", 0.0, 0.0, 8)
