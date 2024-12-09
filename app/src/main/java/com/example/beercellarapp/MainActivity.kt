@@ -22,6 +22,7 @@ import com.example.beercellarapp.screens.BeerDetails
 import com.example.beercellarapp.screens.BeerList
 import com.example.beercellarapp.screens.Welcome
 import com.example.beercellarapp.ui.theme.BeerCellarAppTheme
+import com.google.firebase.Firebase
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,11 +50,10 @@ fun MainScreen(modifier: Modifier = Modifier) {
                 user = authenticationViewModel.user,
                 message = authenticationViewModel.message,
                 signIn = { email, password -> authenticationViewModel.signIn(email, password) },
-                register =  { email, password -> authenticationViewModel.register(email, password) },
-                navigateToNextScreen = { navController.navigate(NavRoutes.Welcome.route)}
+                register = { email, password -> authenticationViewModel.register(email, password) },
+                navigateToNextScreen = { navController.navigate(NavRoutes.Welcome.route) }
             )
         }
-
         composable(NavRoutes.Welcome.route) {
             Welcome(
                 user = authenticationViewModel.user,
@@ -63,7 +63,6 @@ fun MainScreen(modifier: Modifier = Modifier) {
                 }
             )
         }
-
         composable(NavRoutes.BeerList.route) {
             BeerList(
                 beers = beers,
@@ -85,7 +84,15 @@ fun MainScreen(modifier: Modifier = Modifier) {
             arguments = listOf(navArgument("beerId") { type = NavType.IntType })
         ) { backStackEntry ->
             val beerId = backStackEntry.arguments?.getInt("beerId")
-            val beer = beers.find { it.id == beerId } ?: Beer(1, "", name = "No Beer", "", 0.0, 0.0, howMany = 0)
+            val beer = beers.find { it.id == beerId } ?: Beer(
+                1,
+                "",
+                name = "No Beer",
+                "",
+                0.0,
+                0.0,
+                howMany = 0
+            )
             BeerDetails(
                 beer = beer,
                 modifier = modifier,

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -14,6 +15,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import com.google.firebase.auth.FirebaseUser
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,10 +50,19 @@ fun Welcome(
             } else {
                 Text("Welcome ${user.email ?: "unknown"}")
             }
+
+            Button(onClick = { signOut() }) {
+                Text("Sign out")
+            }
         }
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun PrivewWelcome() {
+    Welcome()
+}
 
 
 

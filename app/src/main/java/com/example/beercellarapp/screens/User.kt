@@ -43,8 +43,8 @@ fun Authentication(
     if (user != null) {
         navigateToNextScreen()
     }
-    val emailStart = "anbo@secret12.dk"
-    val passwordStart = "secret12"
+    val emailStart = "mail@mail.com"
+    val passwordStart = "1234"
     var email by remember { mutableStateOf(emailStart) }
     var password by remember { mutableStateOf(passwordStart) }
     var emailIsError by remember { mutableStateOf(false) }

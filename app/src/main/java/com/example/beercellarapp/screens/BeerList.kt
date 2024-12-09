@@ -100,8 +100,8 @@ private fun BeerListPanel(
         if (errorMessage.isNotEmpty()) {
             Text(text = "Problem: $errorMessage")
         }
-        val nameUp = "Name \u2191"
-        val nameDown = "Name \u2193"
+        val nameUp = "Name: \u2191"
+        val nameDown = "Name: \u2193"
         val howManyUp = "How Many: \u2191"
         val howManyDown = "How Many: \u2193"
         var sortByNameAscending by remember { mutableStateOf(true) }
@@ -124,7 +124,7 @@ private fun BeerListPanel(
         }
 
         Row {
-            OutlinedButton(onClick = {
+            TextButton(onClick = {
                 onSortByName(sortByNameAscending)
                 sortByNameAscending = !sortByNameAscending
             })

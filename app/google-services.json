@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "335365278782",
     "project_id": "beercellarappdh",
-    "storage_bucket": "beercellarappdh.appspot.com"
+    "storage_bucket": "beercellarappdh.firebasestorage.app"
   },
   "client": [
     {
