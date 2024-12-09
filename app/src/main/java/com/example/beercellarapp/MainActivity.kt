@@ -22,7 +22,6 @@ import com.example.beercellarapp.screens.BeerDetails
 import com.example.beercellarapp.screens.BeerList
 import com.example.beercellarapp.screens.Welcome
 import com.example.beercellarapp.ui.theme.BeerCellarAppTheme
-import com.google.firebase.Firebase
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,7 +95,7 @@ fun MainScreen(modifier: Modifier = Modifier) {
             BeerDetails(
                 beer = beer,
                 modifier = modifier,
-                onUpdate = { id: Int, beer: Beer -> viewModel.update(id, beer) },
+                onUpdate = { id: Int, beers: Beer -> viewModel.update(id, beers) },
                 onNavigateBack = { navController.popBackStack() }
             )
         }

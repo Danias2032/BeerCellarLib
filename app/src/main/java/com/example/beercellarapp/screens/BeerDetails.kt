@@ -115,24 +115,24 @@ fun BeerDetails(
                     Button(onClick = { onNavigateBack() }) {
                         Text("Back")
                     }
+                    Button(onClick = {
+                        val data = Beer(
+                            id = id.toInt(),
+                            brewery = brewery,
+                            name = name,
+                            style = style,
+                            abvStr.toDouble(),
+                            volumeStr.toDouble(),
+                            howManyStr.toInt()
+                        )
+                        onUpdate(beer.id, data)
+                        onNavigateBack()
+                    }) {
+                        Text("Update")
+                    }
                 }
-                Button(onClick = {
-                    val data = Beer(
-                        id = id.toInt(),
-                        "",
-                        "",
-                        "",
-                        abvStr.toDouble(),
-                        volumeStr.toDouble(),
-                        howManyStr.toInt()
-                    )
-                    onUpdate(beer.id, data)
-                    onNavigateBack()
-                }) {
-                    Text("Update")
-                }
-            }
 
+            }
         }
     }
 }
