@@ -199,7 +199,6 @@ private fun BeerItem(
                             action = null
                         )
                     }
-
             )
         }
     }
