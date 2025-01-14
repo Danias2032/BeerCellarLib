@@ -2,12 +2,15 @@ package com.example.beercellarapp.screens
 
 import android.content.res.Configuration
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -22,7 +25,6 @@ import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -37,6 +39,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.semantics.onClick
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.beercellarapp.models.Beer
@@ -63,7 +67,7 @@ fun BeerList(
                 ),
                 title = { Text("Beer List") })
         },
-        floatingActionButtonPosition = FabPosition.EndOverlay,
+        floatingActionButtonPosition = FabPosition.Center,
         floatingActionButton = {
             FloatingActionButton(
                 shape = CircleShape,
@@ -108,7 +112,8 @@ private fun BeerListPanel(
         var sortByHowManyAscending by remember { mutableStateOf(true) }
         var titleFragment by remember { mutableStateOf("") }
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.widthIn(max = 488.dp)) {
             OutlinedTextField(
                 value = titleFragment,
                 onValueChange = { titleFragment = it },
@@ -164,23 +169,37 @@ private fun BeerItem(
 ) {
     Card(modifier = modifier
         .padding(4.dp)
-        .fillMaxSize(), onClick = { onBeerSelected(beer) })
+        .fillMaxSize(),
+        onClick = { onBeerSelected(beer) })
     {
-        Row(
+        Box(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                modifier = Modifier.padding(8.dp),
-                text = beer.name + ": " + beer.howMany.toString()
+                modifier = Modifier
+                    .padding(8.dp)
+                    .align(Alignment.CenterStart),
+                text = "${beer.name}: ${beer.howMany}"
             )
             Icon(
                 imageVector = Icons.Filled.Delete,
-                contentDescription = "Remove",
+                contentDescription = "Remove ${beer.name}",
                 modifier = Modifier
-                    .padding(8.dp)
-                    .clickable { onBeerDeleted(beer) }
+                    .padding(12.dp)
+                    .size(24.dp)
+                    .align(Alignment.CenterEnd)
+                    .clickable(
+                        onClick = { onBeerDeleted(beer) },
+                        indication = null,
+                        interactionSource = remember { MutableInteractionSource() }
+                    )
+                    .semantics {
+                        onClick(
+                            label = "Remove ${beer.name}",
+                            action = null
+                        )
+                    }
+
             )
         }
     }

@@ -121,9 +121,11 @@ class BeersRepository {
     }
 
     fun sortBeersByName(ascending: Boolean) {
-        Log.d("APPLE", "Sort by Title")
+        Log.d("APPLE", "Sort by Name")
         if (ascending)
             beers.value = beers.value.sortedBy { it.name }
+        else
+            beers.value = beers.value.sortedByDescending { it.name }
     }
 
     fun sortBeersByHowMany(ascending: Boolean) {
