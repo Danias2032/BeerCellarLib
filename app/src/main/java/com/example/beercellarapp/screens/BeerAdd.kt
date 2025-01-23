@@ -115,7 +115,7 @@ fun BeerAdd(
                     onValueChange = { howManyStr = it },
                     value = howManyStr,
                     isError = howManyIsError,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text("Amount") }
                 )
@@ -176,7 +176,7 @@ fun BeerAdd(
                         onValueChange = { howManyStr = it },
                         value = howManyStr,
                         isError = howManyIsError,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         modifier = Modifier.weight(1f),
                         label = { Text("Amount") })
                 }

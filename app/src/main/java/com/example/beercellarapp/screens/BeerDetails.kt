@@ -1,6 +1,7 @@
 package com.example.beercellarapp.screens
 
 import android.content.res.Configuration
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,15 +14,15 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableDoubleStateOf
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,12 +45,18 @@ fun BeerDetails(
     // var pictureUrl by remember { mutableStateOf(beer.pictureUrl.isNullOrEmpty()) }
     var howManyStr by remember { mutableStateOf(beer.howMany.toString()) }
 
+    val dark = isSystemInDarkTheme()
+    val color = if (dark) Color.Gray else Color.LightGray
+
     Scaffold(modifier = modifier.fillMaxSize(),
         topBar = {
             TopAppBar(
                 title = { Text("Beer Details") })
         }) { innerPadding ->
-        Column(modifier = modifier.padding(innerPadding)) {
+        Column(
+            modifier = modifier
+                .padding(innerPadding)
+        ) {
             val orientation = LocalConfiguration.current.orientation
             val isPortrait = orientation == Configuration.ORIENTATION_PORTRAIT
             if (isPortrait) {
@@ -58,42 +65,66 @@ fun BeerDetails(
                     value = id,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth(),
-                    label = { Text(text = "Id") }
+                    label = { Text(text = "Id") },
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = color,
+                        unfocusedContainerColor = Color.Unspecified
+                    )
                 )
                 OutlinedTextField(
                     onValueChange = { brewery = it },
                     value = brewery,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                     modifier = Modifier.fillMaxWidth(),
-                    label = { Text(text = "Brewery") }
+                    label = { Text(text = "Brewery") },
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = color,
+                        unfocusedContainerColor = Color.Unspecified
+                    )
                 )
                 OutlinedTextField(
                     onValueChange = { name = it },
                     value = name,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                     modifier = Modifier.fillMaxWidth(),
-                    label = { Text(text = "Name") }
+                    label = { Text(text = "Name") },
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = color,
+                        unfocusedContainerColor = Color.Unspecified
+                    )
                 )
                 OutlinedTextField(
                     onValueChange = { style = it },
                     value = style,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                     modifier = Modifier.fillMaxWidth(),
-                    label = { Text(text = "Style") }
+                    label = { Text(text = "Style") },
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = color,
+                        unfocusedContainerColor = Color.Unspecified
+                    )
                 )
                 OutlinedTextField(
                     onValueChange = { abvStr = it },
                     value = abvStr,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth(),
-                    label = { Text(text = "Alcohol by Volume") }
+                    label = { Text(text = "Alcohol by Volume") },
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = color,
+                        unfocusedContainerColor = Color.Unspecified
+                    )
                 )
                 OutlinedTextField(
                     onValueChange = { volumeStr = it },
                     value = volumeStr,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth(),
-                    label = { Text(text = "Volume") }
+                    label = { Text(text = "Volume") },
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = color,
+                        unfocusedContainerColor = Color.Unspecified
+                    )
                 )
                 /*OutlinedTextField(
                     onValueChange = { pictureUrl = it },
@@ -104,9 +135,13 @@ fun BeerDetails(
                 OutlinedTextField(
                     onValueChange = { howManyStr = it },
                     value = howManyStr,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth(),
-                    label = { Text(text = "Amount of Beers") }
+                    label = { Text(text = "Amount of Beers") },
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = color,
+                        unfocusedContainerColor = Color.Unspecified
+                    )
                 )
                 Row(
                     modifier = modifier.fillMaxSize(),
