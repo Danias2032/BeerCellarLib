@@ -116,8 +116,8 @@ private fun BeerListPanel(
 ) {
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
-    val dark = isSystemInDarkTheme()
-    val color = if (dark) Color.Gray else Color.LightGray
+    val dark = isSystemInDarkTheme() //
+    val color = if (dark) Color.Gray else Color.LightGray //
 
     Column(modifier = modifier.padding(8.dp)) {
         if (errorMessage.isNotEmpty()) {
@@ -140,8 +140,8 @@ private fun BeerListPanel(
                 onValueChange = { titleFragment = it },
                 label = { Text("Filter by Name") },
                 colors = TextFieldDefaults.colors(
-                    focusedContainerColor = color,
-                    unfocusedContainerColor = Color.Unspecified
+                    focusedContainerColor = color, //
+                    unfocusedContainerColor = Color.Unspecified //
                 ),
                 modifier = Modifier
                     .weight(1f)
@@ -207,8 +207,6 @@ private fun BeerListPanel(
                     "Focus last Beer"
             )
         }
-
-
         LazyVerticalGrid(
             columns = GridCells.Fixed(columns),
         ) {
@@ -250,7 +248,8 @@ private fun BeerItem(
                 indication = rememberRipple()
             )
             .semantics {
-                contentDescription = "Beer: ${beer.name}, Quantity: ${beer.howMany}. Press to select."
+                contentDescription =
+                    "Beer: ${beer.name}, Quantity: ${beer.howMany}. Press to select."
             }
             .focusRequester(focusRequester)
             .onFocusChanged { focusState ->
@@ -274,7 +273,7 @@ private fun BeerItem(
             )
             Icon(
                 imageVector = Icons.Filled.Delete,
-                contentDescription = "Remove ${beer.name}. Press to delete.",
+                contentDescription = "Remove ${beer.name}. Press to delete.", // implenterer allerede semantics, sættes til null hvis icon er rent dekorativt.
                 modifier = Modifier
                     .focusable()
                     .padding(12.dp)
@@ -282,12 +281,9 @@ private fun BeerItem(
                     .align(Alignment.CenterEnd)
                     .clickable(
                         onClick = { showDialog = true },
-                        interactionSource = remember { MutableInteractionSource() },
+                        interactionSource = remember { MutableInteractionSource() }, //
                         indication = rememberRipple() // effekt når man trykker på knappen.
                     )
-                    /*.semantics {
-                        contentDescription = "Remove ${beer.name}. Tap to delete." // override, hvis Icon kun er dekorativt.
-                    }*/
             )
         }
     }
@@ -303,8 +299,10 @@ private fun BeerItem(
                     showDialog = false
                 },
                     modifier = Modifier
-                        .semantics { contentDescription = "Delete ${beer.name}" }
-                    ) {
+                        .semantics {
+                            contentDescription = "Delete ${beer.name}"
+                        } // semantics giver her knappen mulighed for uddybning.
+                ) {
                     Text("Delete")
                 }
             },
@@ -312,7 +310,7 @@ private fun BeerItem(
                 TextButton(onClick = { showDialog = false },
                     modifier = Modifier
                         .semantics { contentDescription = "Cancel deletion" }
-                    ) {
+                ) {
                     Text("Cancel")
                 }
             }
@@ -327,7 +325,7 @@ fun BeerListPreview() {
         beers = listOf(
             Beer(0, "", "Guld dame", "", 0.0, 0.0, 10),
             Beer(1, "", "Dansk Pilsner", "", 0.0, 0.0, 8),
-            Beer(2,"", "Big Mash Up Barrel Aged Johnny Walker", "",0.0, 0.0, 5)
+            Beer(2, "", "Big Mash Up Barrel Aged Johnny Walker", "", 0.0, 0.0, 5)
         ),
         errorMessage = "Some error message"
     )
