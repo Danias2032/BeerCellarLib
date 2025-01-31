@@ -84,10 +84,12 @@ fun BeerList(
         floatingActionButton = {
             FloatingActionButton(
                 shape = CircleShape,
-                onClick = { onBeerAdd() },
-                modifier = Modifier.semantics { contentDescription = "Add Beer" }
+                onClick = { onBeerAdd() }
             ) {
-                Icon(imageVector = Icons.Filled.Add, contentDescription = "Add Beer")
+                Icon(
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = "Add Beer"
+                )
             }
         }) { innerPadding ->
         BeerListPanel(
